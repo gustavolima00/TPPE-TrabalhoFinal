@@ -5,10 +5,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.AccessDeniedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 import exceptions.ArquivoNaoEncontradoException;
+import exceptions.EscritaNaoPermitidaException;
 
 public class FileService {
 	
@@ -38,8 +40,13 @@ public class FileService {
 		}
 	}
 	
-	public static void WriteStringInFile(String path, String content) throws IOException {
-		Path fileName = Path.of(path);
-		Files.writeString(fileName, content);
+	public static void WriteStringInFile(String path, String content) throws IOException, EscritaNaoPermitidaException {
+		try {
+			Path fileName = Path.of(path);
+			Files.writeString(fileName, content);
+		}
+		catch(AccessDeniedException e) {
+			throw new EscritaNaoPermitidaException(path);
+		}
 	}
 }

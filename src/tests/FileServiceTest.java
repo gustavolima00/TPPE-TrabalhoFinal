@@ -8,6 +8,7 @@ import java.io.IOException;
 import org.junit.Test;
 
 import exceptions.ArquivoNaoEncontradoException;
+import exceptions.EscritaNaoPermitidaException;
 import services.FileService;
 
 class CorrectMockData {
@@ -16,15 +17,25 @@ class CorrectMockData {
 }
 
 class WrongMockData {
-	static String FILE_PATH = "wrong/file/path.txt";
-	static String EXPECTED_MESSAGE = "O arquivo" + WrongMockData.FILE_PATH + " nao foi encontrado";
+	static String FILE_PATH = "/bin/wrong.txt";
+	static String EXPECTED_NOT_FOUND_MESSAGE = "O arquivo " + WrongMockData.FILE_PATH + " nao foi encontrado";
+	static String EXPECTED_FORBIDDEN_MESSAGE = "A escrita no arquivo " + WrongMockData.FILE_PATH + " nao foi permitida";
 }
 
 public class FileServiceTest {
 	
 	@Test
-	public void CanWriteFile1() throws IOException {
+	public void CanWriteFile1() throws IOException, EscritaNaoPermitidaException {
 		FileService.WriteStringInFile(CorrectMockData.FILE_PATH, CorrectMockData.FILE_CONTENT);
+	}
+	
+	@Test
+	public void CanWriteFileAndThrowException1() throws IOException, EscritaNaoPermitidaException {
+		EscritaNaoPermitidaException thrown = assertThrows(
+				EscritaNaoPermitidaException.class,
+		           () -> {FileService.WriteStringInFile(WrongMockData.FILE_PATH, CorrectMockData.FILE_CONTENT);}
+		    );
+		assertEquals(thrown.getMessage(), WrongMockData.EXPECTED_FORBIDDEN_MESSAGE);
 	}
 	
 	@Test
@@ -34,12 +45,12 @@ public class FileServiceTest {
 	}
 	
 	@Test
-	public void CanThrowException1() throws IOException, ArquivoNaoEncontradoException{
+	public void CanReadFileAndThrowException1() throws IOException, ArquivoNaoEncontradoException{
 		ArquivoNaoEncontradoException thrown = assertThrows(
 				ArquivoNaoEncontradoException.class,
 		           () -> {FileService.ReadFileAsString(WrongMockData.FILE_PATH);}
 		    );
-		assertEquals(thrown.getMessage(), WrongMockData.EXPECTED_MESSAGE);
+		assertEquals(thrown.getMessage(), WrongMockData.EXPECTED_NOT_FOUND_MESSAGE);
 	}
 	
 	
