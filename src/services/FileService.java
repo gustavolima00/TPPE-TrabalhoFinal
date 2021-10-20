@@ -13,6 +13,7 @@ import java.util.Vector;
 import exceptions.ArquivoNaoEncontradoException;
 import exceptions.EscritaNaoPermitidaException;
 import models.MemoryData;
+import models.TimeData;
 
 public class FileService {
 	
@@ -63,7 +64,20 @@ public class FileService {
 			sb.append("\n");
 		}
 		String result = sb.toString();
-		System.out.println(result);
+		FileService.WriteStringInFile(path, result);
+	}
+	
+	public static void SaveTimeDataAsLine(Vector<TimeData> memoryDatas, String path, String delimiter) throws IOException, EscritaNaoPermitidaException {
+		StringBuilder sb = new StringBuilder();
+		for(TimeData data:memoryDatas) {
+			sb.append(data.Id);
+			for(Integer x:data.Values) {
+				sb.append(delimiter);
+				sb.append(x);
+			}
+			sb.append("\n");
+		}
+		String result = sb.toString();
 		FileService.WriteStringInFile(path, result);
 	}
 }

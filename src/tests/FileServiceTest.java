@@ -11,6 +11,7 @@ import org.junit.Test;
 import exceptions.ArquivoNaoEncontradoException;
 import exceptions.EscritaNaoPermitidaException;
 import models.MemoryData;
+import models.TimeData;
 import services.FileService;
 import services.ParserService;
 
@@ -57,10 +58,17 @@ public class FileServiceTest {
 	}
 	
 	@Test
-	public void CanWriteMemoryData() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
+	public void CanSaveMemoryData() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
 		String fileContent = FileService.ReadFileAsString("src/files/analysisMemory.out");
 		Vector<MemoryData> result = ParserService.BuildMemoryData(fileContent);
 		FileService.SaveMemoryDataAsLine(result, "src/files/analysisMemory.result.out", ",");
+	}
+	
+	@Test
+	public void CanSaveTimeData() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
+		String fileContent = FileService.ReadFileAsString("src/files/analysisTime.out");
+		Vector<TimeData> result = ParserService.BuildTimeData(fileContent);
+		FileService.SaveTimeDataAsLine(result, "src/files/analysisTime.result.out", ",");
 	}
 	
 }
