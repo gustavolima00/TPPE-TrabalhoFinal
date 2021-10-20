@@ -80,4 +80,39 @@ public class FileService {
 		String result = sb.toString();
 		FileService.WriteStringInFile(path, result);
 	}
+	
+	public static void SaveMemoryDataAsColumn(Vector<MemoryData> memoryDatas, String path, String delimiter) throws IOException, EscritaNaoPermitidaException {
+		StringBuilder sb = new StringBuilder();
+		if(memoryDatas.size() == 0) {
+			return;
+		}
+		sb.append(memoryDatas.get(0).Id);
+		for(int i=1; i< memoryDatas.size(); i++) {
+			sb.append(delimiter);
+			sb.append(memoryDatas.get(i).Id);
+		}
+		sb.append("\n");
+		int idx = 0;
+		while(true) {
+			StringBuilder line = new StringBuilder();
+			boolean canBreak = true;
+			if(memoryDatas.get(0).Values.size() > idx) {
+				line.append(memoryDatas.get(0).Values.get(idx));
+				canBreak = false;
+			}
+			for(int i=1; i< memoryDatas.size(); i++) {
+				line.append(delimiter);
+				if(memoryDatas.get(i).Values.size() > idx) {
+					line.append(memoryDatas.get(i).Values.get(idx));
+					canBreak = false;
+				}
+			}
+			line.append("\n");
+			idx++;
+			if(canBreak) break;
+			sb.append(line.toString());
+		}
+		String result = sb.toString();
+		FileService.WriteStringInFile(path, result);
+	}
 }

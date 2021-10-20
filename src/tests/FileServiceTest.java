@@ -58,17 +58,24 @@ public class FileServiceTest {
 	}
 	
 	@Test
-	public void CanSaveMemoryData() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
+	public void CanSaveMemoryDataAsLine() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
 		String fileContent = FileService.ReadFileAsString("src/files/analysisMemory.out");
 		Vector<MemoryData> result = ParserService.BuildMemoryData(fileContent);
-		FileService.SaveMemoryDataAsLine(result, "src/files/analysisMemory.result.out", ",");
+		FileService.SaveMemoryDataAsLine(result, "src/files/analysisMemory.line.out", ",");
 	}
 	
 	@Test
 	public void CanSaveTimeData() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
 		String fileContent = FileService.ReadFileAsString("src/files/analysisTime.out");
 		Vector<TimeData> result = ParserService.BuildTimeData(fileContent);
-		FileService.SaveTimeDataAsLine(result, "src/files/analysisTime.result.out", ",");
+		FileService.SaveTimeDataAsLine(result, "src/files/analysisTime.line.out", ",");
+	}
+	
+	@Test
+	public void CanSaveMemoryDataAsColumn() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
+		String fileContent = FileService.ReadFileAsString("src/files/analysisMemory.out");
+		Vector<MemoryData> result = ParserService.BuildMemoryData(fileContent);
+		FileService.SaveMemoryDataAsColumn(result, "src/files/analysisMemory.column.out", ";");
 	}
 	
 }
