@@ -4,12 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
+import java.util.Vector;
 
 import org.junit.Test;
 
 import exceptions.ArquivoNaoEncontradoException;
 import exceptions.EscritaNaoPermitidaException;
+import models.MemoryData;
 import services.FileService;
+import services.ParserService;
 
 class CorrectMockData {
 	static String FILE_PATH = "src/files/hello_world.txt";
@@ -53,5 +56,11 @@ public class FileServiceTest {
 		assertEquals(thrown.getMessage(), WrongMockData.EXPECTED_NOT_FOUND_MESSAGE);
 	}
 	
+	@Test
+	public void CanWriteMemoryData() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
+		String fileContent = FileService.ReadFileAsString("src/files/analysisMemory.out");
+		Vector<MemoryData> result = ParserService.BuildMemoryData(fileContent);
+		FileService.SaveMemoryDataAsLine(result, "src/files/analysisMemory.result.out", ",");
+	}
 	
 }

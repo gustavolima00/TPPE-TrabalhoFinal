@@ -8,9 +8,11 @@ import java.io.InputStreamReader;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Vector;
 
 import exceptions.ArquivoNaoEncontradoException;
 import exceptions.EscritaNaoPermitidaException;
+import models.MemoryData;
 
 public class FileService {
 	
@@ -48,5 +50,20 @@ public class FileService {
 		catch(AccessDeniedException e) {
 			throw new EscritaNaoPermitidaException(path);
 		}
+	}
+	
+	public static void SaveMemoryDataAsLine(Vector<MemoryData> memoryDatas, String path, String delimiter) throws IOException, EscritaNaoPermitidaException {
+		StringBuilder sb = new StringBuilder();
+		for(MemoryData data:memoryDatas) {
+			sb.append(data.Id);
+			for(Double x:data.Values) {
+				sb.append(delimiter);
+				sb.append(x);
+			}
+			sb.append("\n");
+		}
+		String result = sb.toString();
+		System.out.println(result);
+		FileService.WriteStringInFile(path, result);
 	}
 }
