@@ -65,7 +65,7 @@ public class FileServiceTest {
 	}
 	
 	@Test
-	public void CanSaveTimeData() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
+	public void CanSaveTimeDataAsLine() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
 		String fileContent = FileService.ReadFileAsString("src/files/analysisTime.out");
 		Vector<TimeData> result = ParserService.BuildTimeData(fileContent);
 		FileService.SaveTimeDataAsLine(result, "src/files/analysisTime.line.out", ",");
@@ -76,6 +76,13 @@ public class FileServiceTest {
 		String fileContent = FileService.ReadFileAsString("src/files/analysisMemory.out");
 		Vector<MemoryData> result = ParserService.BuildMemoryData(fileContent);
 		FileService.SaveMemoryDataAsColumn(result, "src/files/analysisMemory.column.out", ";");
+	}
+	
+	@Test
+	public void CanSaveTimeDataAsColumn() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
+		String fileContent = FileService.ReadFileAsString("src/files/analysisTime.out");
+		Vector<TimeData> result = ParserService.BuildTimeData(fileContent);
+		FileService.SaveTimeDataAsColumn(result, "src/files/analysisTime.column.out", ",");
 	}
 	
 }

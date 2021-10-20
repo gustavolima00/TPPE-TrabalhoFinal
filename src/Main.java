@@ -1,6 +1,34 @@
+import java.io.IOException;
+import java.util.Vector;
+
+import exceptions.ArquivoNaoEncontradoException;
+import exceptions.EscritaNaoPermitidaException;
+import models.MemoryData;
+import models.TimeData;
+import services.FileService;
+import services.ParserService;
 
 public class Main {
-	public static void main(String[] args) {
-        System.out.println("Hello, World!"); 
+	public static void main(String[] args) throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
+		
+		// Save analysisTime as column
+		String fileContent1 = FileService.ReadFileAsString("src/files/analysisTime.out");
+		Vector<TimeData> result1 = ParserService.BuildTimeData(fileContent1);
+		FileService.SaveTimeDataAsColumn(result1, "src/files/analysisTime.column.out", ";");
+		
+		// Save analysisTime as line
+		String fileContent2 = FileService.ReadFileAsString("src/files/analysisTime.out");
+		Vector<TimeData> result2 = ParserService.BuildTimeData(fileContent2);
+		FileService.SaveTimeDataAsLine(result2, "src/files/analysisTime.line.out", ";");
+		
+		// Save analysisMemory as column
+		String fileContent3 = FileService.ReadFileAsString("src/files/analysisMemory.out");
+		Vector<MemoryData> result3 = ParserService.BuildMemoryData(fileContent3);
+		FileService.SaveMemoryDataAsColumn(result3, "src/files/analysisMemory.column.out", ";");
+		
+		// Save analysisMemory as line
+		String fileContent4 = FileService.ReadFileAsString("src/files/analysisMemory.out");
+		Vector<MemoryData> result4 = ParserService.BuildMemoryData(fileContent4);
+		FileService.SaveMemoryDataAsLine(result4, "src/files/analysisMemory.line.out", ";");
     }
 }
