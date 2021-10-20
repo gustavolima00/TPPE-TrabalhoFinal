@@ -21,6 +21,12 @@ class WrongMockData {
 }
 
 public class FileServiceTest {
+	
+	@Test
+	public void CanWriteFile1() throws IOException {
+		FileService.WriteStringInFile(CorrectMockData.FILE_PATH, CorrectMockData.FILE_CONTENT);
+	}
+	
 	@Test
 	public void CanReadFile1() throws IOException, ArquivoNaoEncontradoException{
 		String result = FileService.ReadFileAsString(CorrectMockData.FILE_PATH);
@@ -35,5 +41,6 @@ public class FileServiceTest {
 		    );
 		assertEquals(thrown.getMessage(), WrongMockData.EXPECTED_MESSAGE);
 	}
+	
 	
 }

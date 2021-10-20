@@ -5,6 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import exceptions.ArquivoNaoEncontradoException;
 
 public class FileService {
@@ -33,5 +36,10 @@ public class FileService {
 		catch(FileNotFoundException e) {
 			throw new ArquivoNaoEncontradoException(path);
 		}
+	}
+	
+	public static void WriteStringInFile(String path, String content) throws IOException {
+		Path fileName = Path.of(path);
+		Files.writeString(fileName, content);
 	}
 }
