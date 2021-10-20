@@ -10,8 +10,13 @@ import services.ParserService;
 
 public class ParserServiceTest {
 	@Test
-	public void Test1() throws IOException, ArquivoNaoEncontradoException{
+	public void CanBuildMemoryData() throws IOException, ArquivoNaoEncontradoException{
 		String fileContent = FileService.ReadFileAsString("src/files/analysisMemory.out");
 		ParserService.BuildMemoryData(fileContent);
+	}
+	@Test
+	public void CanBuildTimeData() throws IOException, ArquivoNaoEncontradoException{
+		String fileContent = FileService.ReadFileAsString("src/files/analysisTime.out");
+		ParserService.BuildTimeData(fileContent);
 	}
 }
