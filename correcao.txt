@@ -1,0 +1,10 @@
+Testes passando (50%)? 30%
+  --> Há testes que não fazem verificações (asserts ou verificações de objetos
+de exceção lancados). 
+
+
+Formatos dos arquivods (50%)? 50%
+
+Nota final: 80%
+
+Comentarios:
