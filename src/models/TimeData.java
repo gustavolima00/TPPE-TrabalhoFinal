@@ -2,11 +2,14 @@ package models;
 
 import java.util.Vector;
 
-public class TimeData {
-	public int Id;
-	public Vector<Integer> Values;
+public class TimeData extends AnalysisData<Integer>{
 	public TimeData(int id, Vector<Integer> values) {
-		this.Id = id;
-		this.Values = values;
+		super.Id = id;
+		super.Values = values;
+	}
+
+	@Override
+	Integer parseValue(String valueString) {
+		return Integer.parseInt(valueString);
 	}
 }
