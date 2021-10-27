@@ -2,9 +2,12 @@ package models;
 
 import java.util.Vector;
 
-public abstract class AnalysisData<T> {
+public class AnalysisData<T> {
 	public int Id;
 	public Vector<T> Values;
 	
-	abstract T parseValue(String valueString);
+	public AnalysisData(int id, Vector<T> values) {
+		this.Id = id;
+		this.Values = values;
+	}
 }
