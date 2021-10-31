@@ -11,8 +11,6 @@ import org.junit.Test;
 import exceptions.ArquivoNaoEncontradoException;
 import exceptions.EscritaNaoPermitidaException;
 import models.AnalysisData;
-import models.MemoryData;
-import models.TimeData;
 import services.FileService;
 import services.ParserService;
 
@@ -62,28 +60,28 @@ public class FileServiceTest {
 	public void CanSaveMemoryDataAsLine() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
 		String fileContent = FileService.ReadFileAsString("src/files/analysisMemory.out");
 		Vector<AnalysisData<Double>> result = ParserService.BuildMemoryData(fileContent);
-		// FileService.SaveMemoryDataAsLine(result, "src/files/analysisMemory.line.out", ",");
+		FileService.SaveAnalysisDataAsLine(result, "src/files/analysisMemory.line.out", ",");
 	}
 	
 	@Test
 	public void CanSaveTimeDataAsLine() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
 		String fileContent = FileService.ReadFileAsString("src/files/analysisTime.out");
 		Vector<AnalysisData<Integer>> result = ParserService.BuildTimeData(fileContent);
-		// FileService.SaveTimeDataAsLine(result, "src/files/analysisTime.line.out", ",");
+		FileService.SaveAnalysisDataAsLine(result, "src/files/analysisTime.line.out", ",");
 	}
 	
 	@Test
 	public void CanSaveMemoryDataAsColumn() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
 		String fileContent = FileService.ReadFileAsString("src/files/analysisMemory.out");
 		Vector<AnalysisData<Double>> result = ParserService.BuildMemoryData(fileContent);
-		// FileService.SaveMemoryDataAsColumn(result, "src/files/analysisMemory.column.out", ";");
+		FileService.SaveAnalysisDataAsColumn(result, "src/files/analysisMemory.column.out", ";");
 	}
 	
 	@Test
 	public void CanSaveTimeDataAsColumn() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
 		String fileContent = FileService.ReadFileAsString("src/files/analysisTime.out");
 		Vector<AnalysisData<Integer>> result = ParserService.BuildTimeData(fileContent);
-		// FileService.SaveTimeDataAsColumn(result, "src/files/analysisTime.column.out", ",");
+		FileService.SaveAnalysisDataAsColumn(result, "src/files/analysisTime.column.out", ",");
 	}
 	
 }

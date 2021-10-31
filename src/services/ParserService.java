@@ -7,7 +7,7 @@ import models.AnalysisData;
 
 public class ParserService {
 	
-	static <T extends Number> Vector<AnalysisData<T>> BuildAnalysisData(String fileContent, Function<String,T> parseNumber){
+	static <T> Vector<AnalysisData<T>> BuildAnalysisData(String fileContent, Function<String,T> parseNumber){
 		Vector<AnalysisData<T>> result = new Vector<AnalysisData<T>>();
 		String[] lines = fileContent.split("\n");
 		int idx = 0;
