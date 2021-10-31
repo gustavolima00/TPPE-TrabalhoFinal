@@ -1,52 +1,39 @@
 package services;
 
 import java.util.Vector;
-import models.MemoryData;
-import models.TimeData;
+import java.util.function.Function;
+
+import models.AnalysisData;
 
 public class ParserService {
 	
-	public static Vector<MemoryData> BuildMemoryData(String fileContent){
-		Vector<MemoryData> result = new Vector<MemoryData>();
+	static <T> Vector<AnalysisData<T>> BuildAnalysisData(String fileContent, Function<String,T> parseNumber){
+		Vector<AnalysisData<T>> result = new Vector<AnalysisData<T>>();
 		String[] lines = fileContent.split("\n");
 		int idx = 0;
-		Vector<Double> vs = new Vector<Double>();
+		Vector<T> vs = new Vector<T>();
 		
 		for(String line:lines) {
 			if(line.contains("Evolution")) {
 				if(idx != -1) {
-					result.add(new MemoryData(idx, vs));
+					result.add(new AnalysisData<T>(idx, vs));
 					vs.clear();
 				}
 				idx+=1;
 			}
 			else {
-				vs.add(Double.parseDouble(line));
+				vs.add(parseNumber.apply(line));
 			}
 		}
-		result.add(new MemoryData(idx, vs));
+		result.add(new AnalysisData<T>(idx, vs));
 		return result;
 	}
 	
-	public static Vector<TimeData> BuildTimeData(String fileContent){
-		Vector<TimeData> result = new Vector<TimeData>();
-		String[] lines = fileContent.split("\n");
-		int idx = 0;
-		Vector<Integer> vs = new Vector<Integer>();
-		
-		for(String line:lines) {
-			if(line.contains("Evolution")) {
-				if(idx != -1) {
-					result.add(new TimeData(idx, vs));
-					vs.clear();
-				}
-				idx+=1;
-			}
-			else {
-				vs.add(Integer.parseInt(line));
-			}
-		}
-		result.add(new TimeData(idx, vs));
-		return result;
+	public static Vector<AnalysisData<Double>> BuildMemoryData(String fileContent){
+		return BuildAnalysisData(fileContent, st -> Double.parseDouble(st));
+	}
+	
+	public static Vector<AnalysisData<Integer>> BuildTimeData(String fileContent){
+		return BuildAnalysisData(fileContent, st -> Integer.parseInt(st));
 	}
 }

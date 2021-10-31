@@ -10,8 +10,7 @@ import org.junit.Test;
 
 import exceptions.ArquivoNaoEncontradoException;
 import exceptions.EscritaNaoPermitidaException;
-import models.MemoryData;
-import models.TimeData;
+import models.AnalysisData;
 import services.FileService;
 import services.ParserService;
 
@@ -60,29 +59,29 @@ public class FileServiceTest {
 	@Test
 	public void CanSaveMemoryDataAsLine() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
 		String fileContent = FileService.ReadFileAsString("src/files/analysisMemory.out");
-		Vector<MemoryData> result = ParserService.BuildMemoryData(fileContent);
-		FileService.SaveMemoryDataAsLine(result, "src/files/analysisMemory.line.out", ",");
+		Vector<AnalysisData<Double>> result = ParserService.BuildMemoryData(fileContent);
+		FileService.SaveAnalysisDataAsLine(result, "src/files/analysisMemory.line.out", ",");
 	}
 	
 	@Test
 	public void CanSaveTimeDataAsLine() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
 		String fileContent = FileService.ReadFileAsString("src/files/analysisTime.out");
-		Vector<TimeData> result = ParserService.BuildTimeData(fileContent);
-		FileService.SaveTimeDataAsLine(result, "src/files/analysisTime.line.out", ",");
+		Vector<AnalysisData<Integer>> result = ParserService.BuildTimeData(fileContent);
+		FileService.SaveAnalysisDataAsLine(result, "src/files/analysisTime.line.out", ",");
 	}
 	
 	@Test
 	public void CanSaveMemoryDataAsColumn() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
 		String fileContent = FileService.ReadFileAsString("src/files/analysisMemory.out");
-		Vector<MemoryData> result = ParserService.BuildMemoryData(fileContent);
-		FileService.SaveMemoryDataAsColumn(result, "src/files/analysisMemory.column.out", ";");
+		Vector<AnalysisData<Double>> result = ParserService.BuildMemoryData(fileContent);
+		FileService.SaveAnalysisDataAsColumn(result, "src/files/analysisMemory.column.out", ";");
 	}
 	
 	@Test
 	public void CanSaveTimeDataAsColumn() throws IOException, ArquivoNaoEncontradoException, EscritaNaoPermitidaException {
 		String fileContent = FileService.ReadFileAsString("src/files/analysisTime.out");
-		Vector<TimeData> result = ParserService.BuildTimeData(fileContent);
-		FileService.SaveTimeDataAsColumn(result, "src/files/analysisTime.column.out", ",");
+		Vector<AnalysisData<Integer>> result = ParserService.BuildTimeData(fileContent);
+		FileService.SaveAnalysisDataAsColumn(result, "src/files/analysisTime.column.out", ",");
 	}
 	
 }

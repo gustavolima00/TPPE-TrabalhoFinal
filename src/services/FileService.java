@@ -12,8 +12,7 @@ import java.util.Vector;
 
 import exceptions.ArquivoNaoEncontradoException;
 import exceptions.EscritaNaoPermitidaException;
-import models.MemoryData;
-import models.TimeData;
+import models.AnalysisData;
 
 public class FileService {
 	
@@ -53,11 +52,11 @@ public class FileService {
 		}
 	}
 	
-	public static void SaveMemoryDataAsLine(Vector<MemoryData> memoryDatas, String path, String delimiter) throws IOException, EscritaNaoPermitidaException {
+	public static <T> void SaveAnalysisDataAsLine(Vector<AnalysisData<T>> analysisData, String path, String delimiter) throws IOException, EscritaNaoPermitidaException {
 		StringBuilder sb = new StringBuilder();
-		for(MemoryData data:memoryDatas) {
+		for(AnalysisData<T> data:analysisData) {
 			sb.append(data.Id);
-			for(Double x:data.Values) {
+			for(T x:data.Values) {
 				sb.append(delimiter);
 				sb.append(x);
 			}
@@ -67,78 +66,29 @@ public class FileService {
 		FileService.WriteStringInFile(path, result);
 	}
 	
-	public static void SaveTimeDataAsLine(Vector<TimeData> memoryDatas, String path, String delimiter) throws IOException, EscritaNaoPermitidaException {
+	public static <T> void SaveAnalysisDataAsColumn(Vector<AnalysisData<T>> analysisData, String path, String delimiter) throws IOException, EscritaNaoPermitidaException {
 		StringBuilder sb = new StringBuilder();
-		for(TimeData data:memoryDatas) {
-			sb.append(data.Id);
-			for(Integer x:data.Values) {
-				sb.append(delimiter);
-				sb.append(x);
-			}
-			sb.append("\n");
-		}
-		String result = sb.toString();
-		FileService.WriteStringInFile(path, result);
-	}
-	
-	public static void SaveMemoryDataAsColumn(Vector<MemoryData> memoryDatas, String path, String delimiter) throws IOException, EscritaNaoPermitidaException {
-		StringBuilder sb = new StringBuilder();
-		if(memoryDatas.size() == 0) {
+		if(analysisData.size() == 0) {
 			return;
 		}
-		sb.append(memoryDatas.get(0).Id);
-		for(int i=1; i< memoryDatas.size(); i++) {
+		sb.append(analysisData.get(0).Id);
+		for(int i=1; i< analysisData.size(); i++) {
 			sb.append(delimiter);
-			sb.append(memoryDatas.get(i).Id);
+			sb.append(analysisData.get(i).Id);
 		}
 		sb.append("\n");
 		int idx = 0;
 		while(true) {
 			StringBuilder line = new StringBuilder();
 			boolean canBreak = true;
-			if(memoryDatas.get(0).Values.size() > idx) {
-				line.append(memoryDatas.get(0).Values.get(idx));
+			if(analysisData.get(0).Values.size() > idx) {
+				line.append(analysisData.get(0).Values.get(idx));
 				canBreak = false;
 			}
-			for(int i=1; i< memoryDatas.size(); i++) {
+			for(int i=1; i< analysisData.size(); i++) {
 				line.append(delimiter);
-				if(memoryDatas.get(i).Values.size() > idx) {
-					line.append(memoryDatas.get(i).Values.get(idx));
-					canBreak = false;
-				}
-			}
-			line.append("\n");
-			idx++;
-			if(canBreak) break;
-			sb.append(line.toString());
-		}
-		String result = sb.toString();
-		FileService.WriteStringInFile(path, result);
-	}
-	
-	public static void SaveTimeDataAsColumn(Vector<TimeData> timeDatas, String path, String delimiter) throws IOException, EscritaNaoPermitidaException {
-		StringBuilder sb = new StringBuilder();
-		if(timeDatas.size() == 0) {
-			return;
-		}
-		sb.append(timeDatas.get(0).Id);
-		for(int i=1; i< timeDatas.size(); i++) {
-			sb.append(delimiter);
-			sb.append(timeDatas.get(i).Id);
-		}
-		sb.append("\n");
-		int idx = 0;
-		while(true) {
-			StringBuilder line = new StringBuilder();
-			boolean canBreak = true;
-			if(timeDatas.get(0).Values.size() > idx) {
-				line.append(timeDatas.get(0).Values.get(idx));
-				canBreak = false;
-			}
-			for(int i=1; i< timeDatas.size(); i++) {
-				line.append(delimiter);
-				if(timeDatas.get(i).Values.size() > idx) {
-					line.append(timeDatas.get(i).Values.get(idx));
+				if(analysisData.get(i).Values.size() > idx) {
+					line.append(analysisData.get(i).Values.get(idx));
 					canBreak = false;
 				}
 			}
