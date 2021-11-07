@@ -1,0 +1,9 @@
+Extrair metodo (10%) ? 10
+Substituir método por objeto-metodo (30%) ?NOK, nao foi gerada classe para o
+objeto-metodo
+
+Extrair classe (20%) ? 20
+
+Nota final: 30
+
+Comentarios:
